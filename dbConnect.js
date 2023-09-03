@@ -9,6 +9,8 @@ module.exports = async () => {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         });
+
+        console.log(`MongoDB connected: ${connect.connection.host}`);
     } catch (error) {
         process.exit(1);
     }
