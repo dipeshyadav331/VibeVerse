@@ -25,6 +25,11 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("common"));
 app.use(cookieParser());
+app.use(function (request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 let origin = process.env.CLIENT_ORIGIN
 console.log(origin);
 console.log('here env', process.env.NODE_ENV);
