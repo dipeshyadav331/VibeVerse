@@ -21,7 +21,7 @@ cloudinary.config({
 
 const app = express();
 const corsOptions = {
-    origin: 'https://client-ell74.ondigitalocean.app/', // Replace with your frontend's actual origin
+    origin: 'https://client-ell74.ondigitalocean.app', // Replace with your frontend's actual origin
     credentials: true, // Allow credentials (cookies, etc.)
   };
   
