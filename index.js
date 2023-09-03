@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
 
-dotenv.config("./.env");
+dotenv.config();
 
 // Configuration
 cloudinary.config({
