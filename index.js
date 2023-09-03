@@ -6,7 +6,7 @@ const postsRouter = require("./routers/postsRouter");
 const userRouter = require("./routers/userRouter");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
+var cors = require("cors");
 const cloudinary = require("cloudinary").v2;
 
 dotenv.config("./.env");
@@ -20,35 +20,22 @@ cloudinary.config({
 });
 
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:3000', // Replace with your frontend's actual origin
+    credentials: true, // Allow credentials (cookies, etc.)
+  };
+  
+app.use(cors(corsOptions));
 
 //middlewares
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("common"));
 app.use(cookieParser());
-
-app.use(function (req, res, next) {
-    //Enabling CORS
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-    next();
-});
-
-let origin = process.env.CLIENT_ORIGIN
-console.log(origin);
-console.log('here env', process.env.NODE_ENV);
-if(process.env.NODE_ENV === 'production') {
-    origin = process.env.CLIENT_ORIGIN;
-}
-
-app.use(cors());
-
-// app.use(
-//     cors({
-//         credentials: true,
-//         origin
-//     })
-// );
+// let origin = 'http://localhost:3000';
+// console.log('here env', process.env.NODE_ENV);
+// if(process.env.NODE_ENV === 'production') {
+//     origin = process.env.CLIENT_ORIGIN;
+// } 
 
 app.use("/auth", authRouter);
 app.use("/posts", postsRouter);
