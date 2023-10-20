@@ -30,9 +30,9 @@ const signupController = async (req, res) => {
         users.push(email);
         users.push(hashedPassword);
         users.push(otp);
-        console.log("reached here1");
+       
         sendMails.sendmail(name , email , otp);
-        console.log("reached here1");
+       
         return res.send(
             success(201, "Enter OTP for verification")
         );
