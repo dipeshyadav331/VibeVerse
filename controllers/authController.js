@@ -41,7 +41,7 @@ const signupController = async (req, res) => {
     }
 };
 
-const fun = async(req , res) => {
+const sendOTP = async(req , res) => {
     try{
         if(users[3] == req.body.otp){
             const name = users[0];
@@ -196,5 +196,5 @@ module.exports = {
     loginController,
     refreshAccessTokenController,
     logoutController,
-    fun
+    sendOTP
 };

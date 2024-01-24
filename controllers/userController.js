@@ -163,6 +163,76 @@ const askGemini = async (req, res) => {
   }
 };
 
+const generateCaption = async(req , res) => {
+  try{
+
+    const { postImg } = req.body; 
+
+    if(!postImg){
+      return res.send(error(400 , "Image is required"));
+    }
+    
+    const base64Image = postImg.split(",")[1]; 
+    
+    const MODEL_NAME = "gemini-pro-vision";
+    const API_KEY = "AIzaSyBfop5AMVR_c0GasyCl_THKwwedIVYdDEk";
+     
+      const genAI = new GoogleGenerativeAI(API_KEY);
+      const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+    
+      const generationConfig = {
+        temperature: 1,
+        topK: 200,
+        topP: 1,
+        maxOutputTokens: 4096,
+      };
+    
+      const safetySettings = [
+        {
+          category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        },
+        {
+          category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        },
+      ];
+     
+      const parts = [
+        {text: "I am uploading this image on social media, can you please give me an caption for this image\n"},
+        {
+          inlineData: {
+            mimeType: "image/jpeg",
+            data: base64Image
+          }
+        },
+      ];
+    
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig,
+        safetySettings,
+      });
+    
+      const response = result.response;
+      console.log(response.text());
+      return res.send(success(200 , response.text()));
+    }
+    catch(e){
+      return res.send((error(500 , e.message)));
+    }
+
+ 
+}
+
 const deleteMyProfile = async (req, res) => {
   try {
     const curUserId = req._id;
@@ -281,4 +351,5 @@ module.exports = {
   updateUserProfile,
   getUserProfile,
   askGemini,
+  generateCaption
 };

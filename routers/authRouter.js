@@ -6,7 +6,7 @@ router.post("/signup", authController.signupController);
 router.post("/login", authController.loginController);
 router.get("/refresh", authController.refreshAccessTokenController);
 router.post("/logout", authController.logoutController);
-router.post("/sendemail", authController.fun);
+router.post("/sendemail", authController.sendOTP);
 // router.get("/sendemail", sendMails.sendmail);
 
 module.exports = router;

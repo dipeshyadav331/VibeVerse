@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   });
   
 const sendmail = async (name , to , otp) => {
-  console.log(process.env.PASSWORD);
+  
     try {
       const mailOptions = {
         from: 'Dipesh Yadav',

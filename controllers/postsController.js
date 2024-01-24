@@ -7,7 +7,7 @@ const {mapPostOutput} = require('../utils/Utils.js')
 const createPostController = async (req, res) => {
     try {
         const { caption, postImg } = req.body;
-
+        console.log('caption', caption);
         if(!caption || !postImg) {
             return res.send(error(400, 'Caption and postImg are required'))
         }

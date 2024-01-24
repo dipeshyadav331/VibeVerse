@@ -21,7 +21,7 @@ cloudinary.config({
 
 const app = express();
 const corsOptions = {
-    origin: 'https://sea-turtle-app-briqw.ondigitalocean.app', // Replace with your frontend's actual origin
+    origin: 'http://localhost:3001', // Replace with your frontend's actual origin
     credentials: true, // Allow credentials (cookies, etc.)
   };
   
