@@ -21,7 +21,7 @@ cloudinary.config({
 
 const app = express();
 const corsOptions = {
-    origin: 'http://localhost:3001', // Replace with your frontend's actual origin
+    origin: 'https://sea-turtle-app-briqw.ondigitalocean.app', // Replace with your frontend's actual origin
     credentials: true, // Allow credentials (cookies, etc.)
   };
   
@@ -31,11 +31,11 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("common"));
 app.use(cookieParser());
-// let origin = 'http://localhost:3000';
-// console.log('here env', process.env.NODE_ENV);
-// if(process.env.NODE_ENV === 'production') {
-//     origin = process.env.CLIENT_ORIGIN;
-// } 
+let origin = 'https://sea-turtle-app-briqw.ondigitalocean.app';
+console.log('here env', process.env.NODE_ENV);
+if(process.env.NODE_ENV === 'production') {
+    origin = process.env.CLIENT_ORIGIN;
+} 
 
 app.use("/auth", authRouter);
 app.use("/posts", postsRouter);
