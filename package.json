@@ -25,5 +25,8 @@
     "otp-generator": "^4.0.1",
     "react-router-dom": "^6.15.0",
     "time-ago": "^0.2.1"
+  },
+  "engines": {
+    "node": "18.18.0"
   }
 }
