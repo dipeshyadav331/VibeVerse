@@ -9,7 +9,9 @@ const {
     HarmCategory,
     HarmBlockThreshold,
   } = require("@google/generative-ai");
-  
+const dotenv = require("dotenv");
+dotenv.config("./.env");
+
 const followOrUnfollowUserController = async (req, res) => {
   try {
     const { userIdToFollow } = req.body;
@@ -112,8 +114,8 @@ const getUserPosts = async (req, res) => {
 
 const askGemini = async (req, res) => {
   try { 
-    const MODEL_NAME = "gemini-pro";
-    const API_KEY = "AIzaSyBfop5AMVR_c0GasyCl_THKwwedIVYdDEk";
+    const MODEL_NAME = "gemini-1.0-pro";
+    const API_KEY = `${process.env.GEMINI_API_KEY}`;
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -142,11 +144,13 @@ const askGemini = async (req, res) => {
         threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
       },
     ];
-
+    
     const parts = [
-      {
-        text: req.body.query,
-      },
+      {text: `input: ${process.env.INPUT_TEMPLATE1}`},
+      {text: `output: ${process.env.OUTPUT_TEMPLATE1}`},
+      {text: `input: ${process.env.INPUT_TEMPLATE2}`},
+      {text: `output: ${process.env.OUTPUT_TEMPLATE2}`},
+      {text: `input: ${req.body.query}`},
     ];
 
     const result = await model.generateContent({
